@@ -1,27 +1,31 @@
 //
 //  AppDelegate.swift
-//  SickbeardLauncher
+//  SwiftStatusBarApplication
 //
-//  Created by Robert vd Steen on 28-03-15.
-//  Copyright (c) 2015 Robert vd Steen. All rights reserved.
+//  Created by Tommy Leung on 6/7/14.
+//  Copyright (c) 2014 Tommy Leung. All rights reserved.
 //
 
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-
-    @IBOutlet weak var window: NSWindow!
-
-
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        // Insert code here to initialize your application
+class AppDelegate: NSObject, NSApplicationDelegate
+{
+    @IBOutlet var window: NSWindow?
+    @IBOutlet var popover : NSPopover?
+    
+    @IBOutlet weak var menu: NSMenu!
+   
+    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+    
+    func applicationDidFinishLaunching(aNotification: NSNotification?)
+    {
+        let icon = NSImage(named: "statusIcon")
+        icon?.setTemplate(true)
+        statusItem.image = icon
+        statusItem.menu = menu
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
-    }
-
-
-}
+    
+   }
 

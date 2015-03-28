@@ -393,6 +393,7 @@
 				AECF5AF11AC74A55003C0330 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AECF5AF21AC74A55003C0330 /* Build configuration list for PBXNativeTarget "SickbeardLauncherTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +402,7 @@
 				AECF5AF41AC74A55003C0330 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
