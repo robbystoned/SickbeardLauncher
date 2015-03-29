@@ -13,17 +13,36 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SickbeardLauncher" customModuleProvider="target">
             <connections>
+                <outlet property="StatusItem" destination="oig-nv-MNQ" id="Efk-Bz-vCa"/>
                 <outlet property="menu" destination="LOH-xQ-MD3" id="O9i-vR-ZHM"/>
+                <outlet property="quitApp" destination="8qA-1U-NFh" id="sXb-Io-Qxn"/>
+                <outlet property="showSettings" destination="DY9-Ld-Tda" id="jFi-NA-xea"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="LOH-xQ-MD3">
             <items>
-                <menuItem title="Item 1" id="oig-nv-MNQ">
+                <menuItem title="Status" id="oig-nv-MNQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
+                <menuItem title="Restart" keyEquivalent="r" id="sPp-Mo-AFO">
+                    <connections>
+                        <action selector="restartSickbeard:" target="Voe-Tx-rLC" id="mY1-uP-RLA"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Settings" keyEquivalent="S" id="DY9-Ld-Tda">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openSettingsWindow:" target="Voe-Tx-rLC" id="gDk-F0-aWY"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit" keyEquivalent="q" id="8qA-1U-NFh">
+                    <connections>
+                        <action selector="quitApplication:" target="Voe-Tx-rLC" id="buw-nu-AL8"/>
+                    </connections>
+                </menuItem>
             </items>
-            <point key="canvasLocation" x="336" y="455.5"/>
+            <point key="canvasLocation" x="450" y="376.5"/>
         </menu>
     </objects>
 </document>
