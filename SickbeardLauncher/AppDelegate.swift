@@ -1,7 +1,8 @@
 //
 //  AppDelegate.swift
 //  SwiftStatusBarApplication
-//
+//	Author: Robert vd Steen
+//	All rights reserved 2015
 
 
 import Cocoa
