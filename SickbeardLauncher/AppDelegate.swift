@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     @IBOutlet var popover : NSPopover?
     @IBOutlet weak var menu: NSMenu!
     @IBOutlet weak var StatusItem: NSMenuItem!
+     var buf : NSString = NSString()
     let task = NSTask()
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     
@@ -30,8 +31,36 @@ class AppDelegate: NSObject, NSApplicationDelegate
 
         task.launchPath = "/usr/bin/python"
         task.arguments = ["/Applications/sickbeard/sickbeard.py"]
-        task.launch()
+        let pipe = NSPipe()
+        task.standardOutput = pipe
+        let readHandle = pipe.fileHandleForReading
+        readHandle.waitForDataInBackgroundAndNotify()
+        var notificationCenter: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+
+        notificationCenter.addObserver(self, selector: "receivedOut:", name: NSFileHandleDataAvailableNotification, object: readHandle)
         
+        task.launch()
+
+    }
+    
+    func receivedOut(notif : NSNotification) {
+        println("notify")
+        // Unpack the FileHandle from the notification
+        let fh:NSFileHandle = notif.object as NSFileHandle
+        // Get the data from the FileHandle
+        let data = fh.availableData
+        // Only deal with the data if it actually exists
+        if data.length > 1 {
+            // Since we just got the notification from fh, we must tell it to notify us again when it gets more data
+            fh.waitForDataInBackgroundAndNotify()
+            // Convert the data into a string
+            let string = buf + NSString(data: data, encoding: NSUTF8StringEncoding)!
+            var lines = string.componentsSeparatedByString("\n")
+            buf = lines.removeLast()
+            for line in lines {
+                println("OUT!!!!!: \(line)")
+            }
+        }
     }
 
     @IBAction func quitApplication(sender: NSMenuItem) {
