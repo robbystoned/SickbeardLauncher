@@ -33,6 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         task.arguments = ["/Applications/sickbeard/sickbeard.py"]
         let pipe = NSPipe()
         task.standardOutput = pipe
+        task.standardError = pipe
         let readHandle = pipe.fileHandleForReading
         readHandle.waitForDataInBackgroundAndNotify()
         var notificationCenter: NSNotificationCenter = NSNotificationCenter.defaultCenter()
@@ -44,7 +45,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
     }
     
     func receivedOut(notif : NSNotification) {
-        println("notify")
         // Unpack the FileHandle from the notification
         let fh:NSFileHandle = notif.object as NSFileHandle
         // Get the data from the FileHandle
@@ -58,7 +58,14 @@ class AppDelegate: NSObject, NSApplicationDelegate
             var lines = string.componentsSeparatedByString("\n")
             buf = lines.removeLast()
             for line in lines {
-                println("OUT!!!!!: \(line)")
+                if(line.contains("Loading initial show list")){
+                    println("sickbeard started")
+                } else if(line.contains("Unable to start web server, is something else running on port: 8081")){
+                    println("startup failed, port 8081 already in use")
+
+                }
+                
+               
             }
         }
     }
@@ -66,7 +73,13 @@ class AppDelegate: NSObject, NSApplicationDelegate
     @IBAction func quitApplication(sender: NSMenuItem) {
         //stop the sickbeard process and quit this app
         task.terminate();
-        //exit(0)
+        while(task.running){
+             //wait until the sickbead thread has stopped
+            sleep(5)
+        }
+        println("sickbeard thread stopped, terminating application")
+        //if so exit this app
+        exit(0)
     }
     @IBAction func openSettingsWindow(sender: AnyObject) {
         //open settings window
