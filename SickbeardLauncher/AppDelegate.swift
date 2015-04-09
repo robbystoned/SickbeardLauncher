@@ -46,7 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     func receivedOut(notif : NSNotification) {
         // Unpack the FileHandle from the notification
-        let fh:NSFileHandle = notif.object as NSFileHandle
+        let fh:NSFileHandle = notif.object as! NSFileHandle
         // Get the data from the FileHandle
         let data = fh.availableData
         // Only deal with the data if it actually exists
@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
             // Since we just got the notification from fh, we must tell it to notify us again when it gets more data
             fh.waitForDataInBackgroundAndNotify()
             // Convert the data into a string
-            let string = buf + NSString(data: data, encoding: NSUTF8StringEncoding)!
+            let string = (buf as String) + (NSString(data: data, encoding: NSUTF8StringEncoding)! as String)
             var lines = string.componentsSeparatedByString("\n")
             buf = lines.removeLast()
             for line in lines {
