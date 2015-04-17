@@ -14,7 +14,9 @@ class AppDelegate: NSObject, NSApplicationDelegate
     @IBOutlet var popover : NSPopover?
     @IBOutlet weak var menu: NSMenu!
     @IBOutlet weak var StatusItem: NSMenuItem!
-     var buf : NSString = NSString()
+    @IBOutlet weak var settingsWindow: NSView!
+    
+    var buf : NSString = NSString()
     let task = NSTask()
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     
@@ -24,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         icon?.setTemplate(true)
         statusItem.image = icon
         statusItem.menu = menu
+        //settingsWindow.removeFromSuperview()
         startSickbeard()
     }
     
